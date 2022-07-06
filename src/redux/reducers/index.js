@@ -8,6 +8,7 @@ import tvseriesReducer from "./tvseriesReducer";
 import detailReducer from "./detailReducer";
 import authReducer from "./authReducer";
 import filmReducer from "./filmReducer";
+import searchReducer from "./searchReducer";
 export default combineReducers({
   movies: moviesReducer,
   genres: genresReducer,
@@ -18,4 +19,5 @@ export default combineReducers({
   details: detailReducer,
   login: authReducer,
   film: filmReducer,
+  search: searchReducer,
 });

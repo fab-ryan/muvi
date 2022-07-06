@@ -1,9 +1,20 @@
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ImageBackground,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as icons from "@expo/vector-icons";
 import { styles } from "./styles";
 import SearchNavigation from "../../navigation/search.navigate";
+import { useState, useEffect } from "react";
 function Search(props) {
+  const [search, setSearch] = useState("");
+  const handleSearch = (value) => {
+    setSearch(value);
+  };
   return (
     <SafeAreaView style={styles.main}>
       <View style={{ paddingHorizontal: 20 }}>
@@ -11,9 +22,13 @@ function Search(props) {
           <TextInput
             placeholder="Search..."
             placeholderTextColor={"rgba(255,255,255,0.7)"}
-            style={{ color: "white" }}
+            style={{ color: "white", width: 300 }}
             autoCorrect={true}
             autoCapitalize="none"
+            value={search}
+            onChangeText={(e) => {
+              handleSearch(e);
+            }}
           />
           <TouchableOpacity>
             <icons.Feather
@@ -23,7 +38,7 @@ function Search(props) {
           </TouchableOpacity>
         </View>
       </View>
-      {/* <SearchNavigation /> */}
+      <SearchNavigation searchText={search} props={props} />
     </SafeAreaView>
   );
 }

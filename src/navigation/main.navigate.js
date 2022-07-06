@@ -20,6 +20,7 @@ function MainNavigator() {
           borderTopColor: "rgba(255,255,255,0.1)",
           shadowRadius: 5,
         },
+        tabBarHideOnKeyboard: true,
       }}
       sceneContainerStyle={{ backgroundColor: "#202022" }}
     >

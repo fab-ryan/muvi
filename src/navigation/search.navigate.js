@@ -1,14 +1,12 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import Film from "../screens/home/film";
-import Featured from "../screens/home/feature";
-import Origin from "../screens/home/origins";
-import Series from "../screens/home/series";
-import Bookmark from "../screens/home/bookmarks";
 import search from "../screens/search";
+import SeriesSearch from "../screens/search/series";
+import MovieSearch from "../screens/search/movie";
+import SearchResults from "../screens/search/searchResults";
 import { Dimensions } from "react-native";
 const Tab = createMaterialTopTabNavigator();
 
-function SearchNavigation() {
+function SearchNavigation(props) {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -21,19 +19,32 @@ function SearchNavigation() {
         tabBarIndicatorStyle: {
           backgroundColor: "#f2b917",
           height: 4,
-          width: 40,
+          width: 30,
           borderRadius: 9,
           marginHorizontal: 47,
         },
-        swipeEnabled: false,
+        tabBarLabelStyle: { textTransform: "none" },
+        swipeEnabled: true,
       }}
       initialLayout={{ width: Dimensions.get("window").width }}
       sceneContainerStyle={{ backgroundColor: "#27262a" }}
     >
-      <Tab.Screen name="allResults" component={search} />
-      <Tab.Screen name="series" component={search} />
-      <Tab.Screen name="film" component={search} />
-      <Tab.Screen name="origin" component={search} />
+      <Tab.Screen name="allResults" options={{ title: "All Results" }}>
+        {() => (
+          <SearchResults searchText={props.searchText} props={props.props} />
+        )}
+      </Tab.Screen>
+      <Tab.Screen name="Series">
+        {() => (
+          <SeriesSearch searchText={props.searchText} props={props.props} />
+        )}
+      </Tab.Screen>
+      <Tab.Screen name="Film">
+        {() => (
+          <MovieSearch searchText={props.searchText} props={props.props} />
+        )}
+      </Tab.Screen>
+      {/* <Tab.Screen name="origin" component={search} /> */}
     </Tab.Navigator>
   );
 }
