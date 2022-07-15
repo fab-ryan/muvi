@@ -8,3 +8,4 @@ export * from "./details.actions";
 export * from "./authAction";
 export * from "./filmActions";
 export * from "./searchAction";
+export * from "./playAction";

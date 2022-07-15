@@ -7,18 +7,19 @@ import {
   USER_HAS_LOGINED_OUT_SUCCESS,
   SIGN_UP_FAILED,
   SIGN_UP_SUCCESS,
+  USER_LOGGES_IN,
+  LOGOUT_USER,
 } from "../";
-import auth from "firebase/auth";
 import actions from "./actions";
 import firebase from "../../utils/config";
-import { Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export const loginUser = (email, password) => async (dispatch) => {
   firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      // Signed in
+    .then(async (userCredential) => {
       var user = userCredential.user;
+      // await AsyncStorage.setItem("user", user);
       dispatch(actions(LOGIN_SUCCESS, user));
       // ...
     })
@@ -28,27 +29,47 @@ export const loginUser = (email, password) => async (dispatch) => {
       dispatch(actions(LOGIN_FAILURE, errorCode + errorMessage));
     });
 };
+export const userLoggedIn = () => async (dispatch) => {
+  try {
+    let value = await AsyncStorage.getItem("user");
+    console.log(value);
+    if (value !== null) {
+      // value previously stored
+      dispatch(actions(USER_LOGGES_IN, value));
+    }
+  } catch (e) {
+    // error reading value
+    console.log(e.message);
+  }
+};
 
 export const RegisterUser = (email, password) => async (dispatch) => {
-  firebase
-    .auth()
-    .signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      var user = userCredential.user;
-      dispatch(actions(REGISTER_SUCCESS, user));
-    })
-    .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      dispatch(actions(REGISTER_FAILURE, errorMessage));
-    });
+  try {
+    console.log(email, password);
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        var user = userCredential.user;
+        alert("User Created Successfully");
+        dispatch(actions(REGISTER_SUCCESS, user));
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        alert(errorCode + errorMessage);
+        dispatch(actions(REGISTER_FAILURE, errorMessage));
+      });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const UserStateChange = () => async (dispatch) => {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       var uid = user.uid;
-      dispatch(actions(USER_HAS_LOGINED_IN_SUCCESS, user));
+      dispatch(actions(USER_HAS_LOGINED_IN_SUCCESS, uid));
     } else {
       dispatch(actions(USER_HAS_LOGINED_OUT_SUCCESS));
     }
@@ -81,5 +102,18 @@ export const SignUpWithGoogle = () => async (dispatch) => {
       var credential = error.credential;
       // ...
       dispatch(actions(SIGN_UP_FAILED, email, credential));
+    });
+};
+export const logOut = () => (dispatch) => {
+  firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      // Sign-out successful.
+      dispatch(actions(LOGOUT_USER));
+    })
+    .catch((error) => {
+      // An error happened.
+      console.log(error);
     });
 };

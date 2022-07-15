@@ -32,22 +32,14 @@ function Register(props) {
     }
   };
   const handleRegister = () => {
-    if (password !== confirmPassword)
+    if (password != confirmPassword)
       return Alert.alert("Error", "Password not match");
-    else if (password === "" || confirmPassword == "") {
+    else if (password == "" || confirmPassword == "") {
       return Alert.alert("Error", "Password must be at least be 8 characters");
     } else if (password.length < 8) {
       return Alert.alert("Error", "Password  is less than 8 characters");
     } else {
       props.RegisterUser(email, password);
-      Alert.alert("Success", props.login.userData, [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel",
-        },
-        { text: "OK", onPress: () => console.log("OK Pressed") },
-      ]);
     }
   };
   return (
@@ -85,7 +77,7 @@ function Register(props) {
             <TextInput
               placeholder="Email Address"
               placeholderTextColor={"rgba(255,255,255,0.5)"}
-              style={{ color: "white" }}
+              style={{ color: "white", width: "90%" }}
               value={email}
               onChangeText={(value) => {
                 setEmail(value);
@@ -100,7 +92,7 @@ function Register(props) {
           <View style={[styles.input, { marginTop: 13 }]}>
             <TextInput
               secureTextEntry={true}
-              style={{ color: "white" }}
+              style={{ color: "white", width: "90%" }}
               placeholder="Password"
               placeholderTextColor={"rgba(255,255,255,0.5)"}
               value={password}
@@ -114,7 +106,7 @@ function Register(props) {
           <View style={[styles.input, { marginTop: 13 }]}>
             <TextInput
               secureTextEntry={true}
-              style={{ color: "white" }}
+              style={{ color: "white", width: "90%" }}
               placeholder="Confirm Password"
               placeholderTextColor={"rgba(255,255,255,0.5)"}
               value={confirmPassword}

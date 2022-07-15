@@ -22,9 +22,9 @@ const OnBoardScreen = (props) => {
             <View style={styles.getStarted}>
               <Button
                 title="Get Started"
-                onPress={() => {
-                  props.navigation.navigate("IntroLogin");
-                }}
+                onPress={() => 
+                  props.navigation.navigate("IntroLogin")
+                }
               />
             </View>
           </View>

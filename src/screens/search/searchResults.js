@@ -39,6 +39,7 @@ function SearchResult(props) {
         <Text></Text>
       )}
       <ScrollView
+        style={{ flex: 1 }}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }

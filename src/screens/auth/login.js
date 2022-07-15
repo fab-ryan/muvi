@@ -7,7 +7,7 @@ import {
   Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Button, CustomButton, AppleButton } from "../../components/button";
+import Preloader, { Button, CustomButton, AppleButton } from "../../components";
 import { styles } from "./authStyle";
 import * as icons from "@expo/vector-icons";
 import logo from "../../../assets/logo.png";
@@ -89,7 +89,7 @@ function Login(props) {
             <TextInput
               placeholder="Email Address"
               placeholderTextColor={"rgba(255,255,255,0.5)"}
-              style={{ color: "white" }}
+              style={{ color: "white", width: "90%" }}
               value={email}
               autoCorrect={true}
               autoCapitalize="none"
@@ -106,7 +106,7 @@ function Login(props) {
           <View style={[styles.input, { marginTop: 40 }]}>
             <TextInput
               secureTextEntry={showPassword}
-              style={{ color: "white" }}
+              style={{ color: "white", width: "90%" }}
               placeholder="Password"
               placeholderTextColor={"rgba(255,255,255,0.5)"}
               onChangeText={setPassword}
